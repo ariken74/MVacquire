@@ -488,7 +488,7 @@ cdef dict lists = {
 #(string)
 #get/set binary
 
-cdef char* StringConstructionFunction(const char* buf, size_t size):
+cdef char* StringConstructionFunction(const char* buf, size_t size) noexcept:
     #print "String Constructor:", buf, size
     cdef object res = buf[:size-1]
     Py_INCREF(res) #make res survive
