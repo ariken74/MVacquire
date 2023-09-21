@@ -1,5 +1,5 @@
 # -*- coding: latin-1 -*-
-# cython: c_string_type=str, c_string_encoding=utf-8
+# cython: c_string_type=str, c_string_encoding=utf-8, language_level=3
 
 from __future__ import print_function
 from _mvDeviceManager cimport *
