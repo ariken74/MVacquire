@@ -18,7 +18,7 @@ cdef to_bytes(s):
     return b
 
 
-cpdef int visibility_level = cvGuru #TODO: allow changing this variable
+cdef int visibility_level = cvGuru #TODO: allow changing this variable
 
 class MVError(RuntimeError):
     def __init__(self, msg = ''):
