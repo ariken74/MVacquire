@@ -18,7 +18,7 @@ cdef to_bytes(s):
     return b
 
 
-cdef int visibility_level = cvGuru #TODO: allow changing this variable
+cpdef int visibility_level = cvGuru #TODO: allow changing this variable
 
 class MVError(RuntimeError):
     def __init__(self, msg = ''):
@@ -94,7 +94,7 @@ cdef class DeviceManager:
         dmr_errcheck(DMR_GetDevice(&hdev, dmdsmSerial, name, nr, '*'))
         return Device(hdev)
 
-    cdef object get_device_by_id(self, int device_id, int nr = 0):
+    cpdef object get_device_by_id(self, int device_id, int nr = 0):
         cdef HDEV hdev
         dmr_errcheck(DMR_GetDevice(&hdev, dmdsmUseDevID, '*', nr, '*'))
         return Device(hdev)
@@ -758,12 +758,12 @@ cdef class Property(Component):
     
 
 cdef class PropertyInt(Property):
-    cdef int get(self, int index = 0):
+    cpdef int get(self, int index = 0):
         cdef int value
         obj_errcheck(OBJ_GetI(self.obj, &value, index))
         return value
 
-    cdef set(self, int value, int index = 0):
+    cpdef set(self, int value, int index = 0):
         obj_errcheck(OBJ_SetI(self.obj, value, index))
 
     cdef object string_to_value(self, s):
@@ -800,17 +800,17 @@ cdef class PropertyInt(Property):
         
         return d
 
-    #cdef bytes get(self, int index = 0):
+    #cpdef bytes get(self, int index = 0):
     #    return self.get_string(sqPropVal, index)
         
 
 cdef class PropertyInt64(Property):
-    cdef int64_type get(self, int index = 0):
+    cpdef int64_type get(self, int index = 0):
         cdef int64_type value
         obj_errcheck(OBJ_GetI64(self.obj, &value, index))
         return value
 
-    cdef set(self, int64_type value, int index = 0):
+    cpdef set(self, int64_type value, int index = 0):
         obj_errcheck(OBJ_SetI64(self.obj, value, index))
 
     cdef object string_to_value(self, s):
@@ -850,12 +850,12 @@ cdef class PropertyInt64(Property):
 
         
 cdef class PropertyFloat(Property):
-    cdef double get(self, int index = 0):
+    cpdef double get(self, int index = 0):
         cdef double value
         obj_errcheck(OBJ_GetF(self.obj, &value, index))
         return value
 
-    cdef set(self, double value, int index = 0):
+    cpdef set(self, double value, int index = 0):
         obj_errcheck(OBJ_SetF(self.obj, value, index))
 
     cdef object string_to_value(self, s):
@@ -863,19 +863,19 @@ cdef class PropertyFloat(Property):
     #FIXME: sscanf with format????
     
 cdef class PropertyPtr(Property):
-    cdef long int get(self, int index = 0):
+    cpdef long int get(self, int index = 0):
         cdef void* value
         obj_errcheck(OBJ_GetP(self.obj, &value, index))
         return <long int>value
 
-    cdef set(self, long long int value, int index = 0): #TODO: PyCapsule?
+    cpdef set(self, long long int value, int index = 0): #TODO: PyCapsule?
         obj_errcheck(OBJ_SetP(self.obj, <void *>value, index))
 
 cdef class PropertyString(Property):
-    cdef get(self, int index = 0):
+    cpdef get(self, int index = 0):
         return self.get_string(sqPropVal, index)
 
-    cdef set(self, bytes value, int index = 0):
+    cpdef set(self, bytes value, int index = 0):
         self.writeS(value, index)
 
 cdef component_class = {ctList: List,
